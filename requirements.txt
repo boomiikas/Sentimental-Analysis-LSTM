@@ -1,0 +1,8 @@
+pandas
+numpy
+tensorflow
+gradio
+matplotlib
+seaborn
+scikit-learn
+streamlit
