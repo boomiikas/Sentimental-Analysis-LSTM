@@ -1,109 +1,80 @@
-import os
 import streamlit as st
+import re
+import nltk
+import pickle
 import numpy as np
-import pandas as pd
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import pickle
 import tensorflow as tf
-from tensorflow.keras.layers import Layer, Dense
-from keras.saving import register_keras_serializable, serialize_keras_object, deserialize_keras_object
-import matplotlib.pyplot as plt
-
-st.set_page_config(page_title="Sentiment Analysis", layout="wide")
-# Clear the Streamlit cache to force the model to be re-loaded
-st.cache_resource.clear()
-
-
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+from tensorflow.keras.layers import Dense, Layer
 
 # -------------------------
-# Custom Attention Layer
-@register_keras_serializable()
+# Define Custom Attention Layer
+# -------------------------
 class AttentionLayer(Layer):
     def __init__(self, **kwargs):
         super(AttentionLayer, self).__init__(**kwargs)
         self.score_dense = Dense(1, activation='tanh')
 
     def call(self, inputs):
-        score = self.score_dense(inputs)
+        score = self.score_dense(inputs)  # [batch, timesteps, 1]
         attention_weights = tf.nn.softmax(score, axis=1)
         context_vector = tf.reduce_sum(inputs * attention_weights, axis=1)
         return context_vector
 
-    def get_config(self):
-        # Only return the base config; Keras will handle sub-layers automatically
-        base_config = super().get_config()
-        return base_config
+# -------------------------
+# NLTK Setup
+# -------------------------
+nltk.download('punkt')
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english'))
+stemmer = PorterStemmer()
+
+def clean_preprocess(text):
+    text = text.lower()
+    text = re.sub(r"[^a-z\s]", "", text)
+    tokens = nltk.word_tokenize(text)
+    tokens = [stemmer.stem(word) for word in tokens if word not in stop_words]
+    return " ".join(tokens)
 
 # -------------------------
-# Load model, tokenizer, label encoder
-@st.cache_resource
-def load_sentiment_model():
-    return load_model(
-        "best_model.keras",
-        compile=False,
-        custom_objects={"AttentionLayer": AttentionLayer}    )
+# Load Tokenizer & Label Encoder
+# -------------------------
+with open("tokenizer.pkl", "rb") as f:
+    tokenizer = pickle.load(f)
 
-
-model = load_sentiment_model()
-
-
-with open("tokenizer.pkl", "rb") as handle:
-    tokenizer = pickle.load(handle)
-
-with open("label_encoder.pkl", "rb") as handle:
-    encoder = pickle.load(handle)
-
-MAX_LEN = 50  # must match training
+with open("label_encoder.pkl", "rb") as f:
+    le = pickle.load(f)
 
 # -------------------------
-# Streamlit page setup
-st.markdown("<h1 style='text-align:center; color:#4CAF50;'>Sentiment Analysis App</h1>", unsafe_allow_html=True)
-st.write("Enter a sentence below and the model will predict its sentiment (Negative, Neutral, Positive).")
+# Load Trained Model (.h5)
+# -------------------------
+model = load_model("rnnmodel.h5", custom_objects={"AttentionLayer": AttentionLayer})
+max_len = 50  # must match training
 
 # -------------------------
-# Input
-user_input = st.text_area("Type your sentence here...", height=100)
-
+# Streamlit App
 # -------------------------
-# Prediction
-if st.button("🚀 Analyze Sentiment") and user_input.strip() != "":
-    # Convert text to sequence
-    seq = tokenizer.texts_to_sequences([user_input])
-    padded = pad_sequences(seq, maxlen=MAX_LEN, padding="post", truncating="post")
-    
-    # Predict
-    pred = model.predict(padded)[0]
-    idx = np.argmax(pred)
-    sentiment = encoder.classes_[idx]
-    confidence = float(pred[idx])
+st.title("Sentiment Analysis App")
 
-    st.success(f"🎯 Predicted Sentiment: **{sentiment.capitalize()}** (Confidence: {confidence:.2f})")
+user_input = st.text_area("Enter your text:")
 
-    # Probability bar chart
-    prob_df = pd.DataFrame({
-        "Sentiment": encoder.classes_,
-        "Confidence": pred
-    })
+if st.button("Predict"):
+    if user_input.strip() == "":
+        st.warning("Please enter some text.")
+    else:
+        # Clean text
+        clean_text = clean_preprocess(user_input)
 
-    fig, ax = plt.subplots()
-    colors = ['red' if s=="negative" else 'gray' if s=="neutral" else 'green' for s in encoder.classes_]
-    ax.bar(prob_df['Sentiment'], prob_df['Confidence'], color=colors)
-    ax.set_ylim(0, 1)
-    ax.set_ylabel("Confidence")
-    for i, v in enumerate(prob_df['Confidence']):
-        ax.text(i, v + 0.02, f"{v*100:.1f}%", ha='center', fontweight='bold')
-    st.pyplot(fig)
+        # Convert to sequence
+        seq = tokenizer.texts_to_sequences([clean_text])
+        pad_seq = pad_sequences(seq, maxlen=max_len)
 
-# -------------------------
-# Sidebar
-st.sidebar.header("About")
-st.sidebar.write("""
-This app uses a Bi-LSTM with Attention mechanism to classify text into:
-- Negative
-- Neutral
-- Positive
+        # Predict
+        pred = model.predict(pad_seq)
+        pred_label = np.argmax(pred, axis=1)
+        sentiment = le.inverse_transform(pred_label)[0]
 
-Built with TensorFlow, Keras, and Streamlit. 🎉
-""")
+        st.success(f"Predicted Sentiment: **{sentiment}**")
