@@ -15,21 +15,26 @@ from tensorflow.keras.layers import Dense, Layer
 # -------------------------
 class AttentionLayer(Layer):
     def __init__(self, **kwargs):
-        super(AttentionLayer, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.score_dense = Dense(1, activation='tanh')
+
+    def build(self, input_shape):
+        # Build Dense layer manually to avoid H5 loading errors
+        self.score_dense.build(input_shape)
+        super().build(input_shape)
 
     def call(self, inputs):
         score = self.score_dense(inputs)  # [batch, timesteps, 1]
         attention_weights = tf.nn.softmax(score, axis=1)
         context_vector = tf.reduce_sum(inputs * attention_weights, axis=1)
         return context_vector
-    
+
     def get_config(self):
         config = super().get_config()
         return config
 
 # -------------------------
-# NLTK Setup
+# NLTK Setup (silent downloads for cloud)
 # -------------------------
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
@@ -55,12 +60,21 @@ with open("label_encoder.pkl", "rb") as f:
 # -------------------------
 # Load Trained Model (.h5)
 # -------------------------
-model = load_model("rnnmodel.h5", custom_objects={"AttentionLayer": AttentionLayer})
 max_len = 50  # must match training
+embedding_dim = 100  # replace with your actual embedding/input size
+
+try:
+    model = load_model("rnnmodel.h5", custom_objects={"AttentionLayer": AttentionLayer})
+except Exception:
+    # If loading fails on cloud, rebuild first
+    dummy_input = tf.zeros((1, max_len, embedding_dim))
+    model.build(dummy_input.shape)
+    model = load_model("rnnmodel.h5", custom_objects={"AttentionLayer": AttentionLayer})
 
 # -------------------------
 # Streamlit App
 # -------------------------
+st.set_page_config(page_title="Sentiment Analysis App", layout="centered")
 st.title("Sentiment Analysis App")
 
 user_input = st.text_area("Enter your text:")
