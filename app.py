@@ -23,12 +23,16 @@ class AttentionLayer(Layer):
         attention_weights = tf.nn.softmax(score, axis=1)
         context_vector = tf.reduce_sum(inputs * attention_weights, axis=1)
         return context_vector
+    
+    def get_config(self):
+        config = super().get_config()
+        return config
 
 # -------------------------
 # NLTK Setup
 # -------------------------
-nltk.download('punkt')
-nltk.download('stopwords')
+nltk.download('punkt', quiet=True)
+nltk.download('stopwords', quiet=True)
 stop_words = set(stopwords.words('english'))
 stemmer = PorterStemmer()
 
