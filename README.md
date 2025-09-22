@@ -2,11 +2,12 @@
 
 A dataset for sentiment classification tasks, containing labeled text samples. This dataset is useful for training and evaluating models to determine sentiment from text (e.g., positive, neutral, negative).
 
+**DEMO LINK :** http://localhost:8502/
 ---
 
 ## 📦 Dataset Description
 
-- **Name:** Sentiment Analysis Dataset  
+- **Name:** Sentiment Analysis Dataset  (https://www.kaggle.com/datasets/abhi8923shriv/sentiment-analysis-dataset?utm_source=chatgpt.com&select=train.csv)
 - **Source:** Kaggle — by user *abhi8923shriv*  
 - **Structure:** The dataset consists of CSV files, including at least a **train** set (`train.csv`) & possibly a **test** set.
 
