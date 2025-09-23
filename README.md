@@ -17,11 +17,6 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 -   **Source:** Kaggle --- by user *abhi8923shriv*
 -   **Format:** CSV files (train.csv, test.csv if available)
 
-### Columns in `train.csv`:
-
--   **text** → The text content (tweets/reviews/sentences).
--   **sentiment** → Target label (positive / negative / neutral).
-
 ------------------------------------------------------------------------
 
 ## ✅ Task
