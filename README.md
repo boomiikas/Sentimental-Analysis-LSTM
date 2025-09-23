@@ -2,7 +2,8 @@
 
 A dataset for sentiment classification tasks, containing labeled text samples. This dataset is useful for training and evaluating models to determine sentiment from text (e.g., positive, neutral, negative).
 
-**DEMO LINK :** http://localhost:8502/
+**Demo Link :** http://localhost:8501/
+
 ---
 
 ## 📦 Dataset Description
@@ -62,28 +63,10 @@ A dataset for sentiment classification tasks, containing labeled text samples. T
 - Ensure no data leakage between train/test.  
 
 ---
+## App Screenshots
+<img width="1284" height="555" alt="image" src="https://github.com/user-attachments/assets/68b5910a-5020-4e69-b07d-4ccd647ac5fa" />
+<img width="1011" height="470" alt="image" src="https://github.com/user-attachments/assets/2e13c552-82b8-4fdb-bd0e-b6daa9d7ea3b" />
 
-## 🛠 Example Usage (Python)
-
-```python
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report
-
-df = pd.read_csv('train.csv')
-X_train, X_val, y_train, y_val = train_test_split(df['text'], df['sentiment'], test_size=0.2, random_state=42)
-
-vectorizer = TfidfVectorizer(max_features=5000)
-X_train_vec = vectorizer.fit_transform(X_train)
-X_val_vec = vectorizer.transform(X_val)
-
-clf = LogisticRegression()
-clf.fit(X_train_vec, y_train)
-y_pred = clf.predict(X_val_vec)
-print(classification_report(y_val, y_pred))
-```
 
 ---
 
