@@ -1,76 +1,103 @@
-# Sentiment Analysis Dataset
+# 📊 Sentiment Analysis with Bi-LSTM
 
-A dataset for sentiment classification tasks, containing labeled text samples. This dataset is useful for training and evaluating models to determine sentiment from text (e.g., positive, neutral, negative).
+A deep learning project for sentiment classification using the
+[Sentiment Analysis
+Dataset](https://www.kaggle.com/datasets/abhi8923shriv/sentiment-analysis-dataset?utm_source=chatgpt.com&select=train.csv).\
+The goal is to train and evaluate models that predict sentiment
+(positive, negative, neutral) from text data.
 
-**Demo Link :** http://localhost:8501/
+**🚀 Demo App:** [Sentiment Analysis Web
+App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 
----
+------------------------------------------------------------------------
 
 ## 📦 Dataset Description
 
-- **Name:** Sentiment Analysis Dataset  (https://www.kaggle.com/datasets/abhi8923shriv/sentiment-analysis-dataset?utm_source=chatgpt.com&select=train.csv)
-- **Source:** Kaggle — by user *abhi8923shriv*  
-- **Structure:** The dataset consists of CSV files, including at least a **train** set (`train.csv`) & possibly a **test** set.
+-   **Name:** Sentiment Analysis Dataset\
+-   **Source:** Kaggle --- by user *abhi8923shriv*\
+-   **Format:** CSV files (train.csv, test.csv if available)
 
----
+### Columns in `train.csv`:
 
-## 🗂 Files / Columns
+-   **text** → The text content (tweets/reviews/sentences).\
+-   **sentiment** → Target label (positive / negative / neutral).
 
-`train.csv` typically includes the following columns:
-
-- **text**: The textual content (tweet/review/sentence).  
-- **sentiment**: The sentiment label (e.g. positive, neutral, negative).  
-
----
+------------------------------------------------------------------------
 
 ## ✅ Task
 
-- **Primary Task:** Sentiment Classification  
-- **Goal:** Given a text input, predict its sentiment label.  
-- **Possible Labels:** (for example) positive, negative, neutral — confirm from dataset.
+-   **Objective:** Sentiment Classification\
+-   **Goal:** Predict the sentiment of a given text input.\
+-   **Labels:** Positive, Negative, Neutral
 
----
+------------------------------------------------------------------------
+
+## 🔄 Approach
+
+### 🔹 Preprocessing
+
+-   Text cleaning (lowercasing, punctuation removal, stopwords)\
+-   Tokenization & padding sequences\
+-   Handled noisy data (typos, emojis, special chars)
+
+### 🔹 Models Tried
+
+1.  **LSTM:**
+    -   Initial experiments with a standard LSTM gave poor accuracy and
+        unreliable predictions.
+2.  **Bi-LSTM (Bidirectional LSTM):**
+    -   Switching to Bi-LSTM significantly improved results.\
+    -   Achieved **83% accuracy** with consistent and correct
+        predictions.
+
+------------------------------------------------------------------------
+
+## 📊 Results
+
+-   **Final Model:** Bi-LSTM\
+-   **Accuracy:** 83%\
+-   **Predictions:** Stable and true compared to standard LSTM
+
+------------------------------------------------------------------------
 
 ## 🔍 Usage Suggestions
 
-**Preprocessing:**  
-- Clean text (punctuation, lowercasing, stopwords).  
-- Tokenization.  
-- Handle class imbalance if present.
+**Feature Engineering Options:**\
+- Bag-of-Words / TF-IDF\
+- Word Embeddings (Word2Vec, GloVe, FastText)\
+- Transformer models (BERT, RoBERTa, DistilBERT)
 
-**Feature Engineering:**  
-- Bag-of-words, TF-IDF.  
-- Word embeddings (Word2Vec, GloVe).  
-- Transformer models (BERT, RoBERTa).  
+**Evaluation Metrics:**\
+- Accuracy, Precision, Recall, F1-score\
+- Confusion Matrix\
+- Macro/Weighted F1 for imbalanced data
 
-**Modeling:**  
-- Classical ML (Logistic Regression, SVM, Random Forest).  
-- Deep Learning (LSTM, CNN).  
-- Pretrained Language Models.
+------------------------------------------------------------------------
 
-**Evaluation Metrics:**  
-- Accuracy, Precision, Recall, F1-score.  
-- Confusion matrix.  
-- Consider macro/weighted F1 for imbalance.
+## ⚠ Considerations
 
----
+-   Class imbalance may affect results\
+-   Text contains noise (typos, emojis, special chars)\
+-   Risk of overfitting on small dataset → apply dropout/regularization\
+-   Ensure proper train/test split (avoid leakage)
 
-## ⚠ Potential Issues / Considerations
+------------------------------------------------------------------------
 
-- Class imbalance.  
-- Noisy text (typos, emojis, special chars).  
-- Overfitting risk if dataset small.  
-- Ensure no data leakage between train/test.  
+## 🖼️ App Screenshots
 
----
-## App Screenshots
-<img width="1284" height="555" alt="image" src="https://github.com/user-attachments/assets/68b5910a-5020-4e69-b07d-4ccd647ac5fa" />
-<img width="1011" height="470" alt="image" src="https://github.com/user-attachments/assets/2e13c552-82b8-4fdb-bd0e-b6daa9d7ea3b" />
+`<img width="1019" height="513" alt="image" src="https://github.com/user-attachments/assets/b6a6023c-7997-47b0-9065-7d441c4152f5" />`{=html}\
+`<img width="1191" height="597" alt="image" src="https://github.com/user-attachments/assets/03bfc4db-73bf-4e91-86a1-ae8a72d76308" />`{=html}\
+`<img width="1049" height="542" alt="image" src="https://github.com/user-attachments/assets/05dcea70-93f2-4ed9-a874-71b3fcb76a73" />`{=html}
 
-
----
+------------------------------------------------------------------------
 
 ## 📝 Licensing & Citation
 
-- Check Kaggle dataset page for licensing terms.  
-- Cite the author: *abhi8923shriv* if using in research/publications.
+-   Refer to the Kaggle dataset page for licensing terms.\
+-   Cite the dataset author: *abhi8923shriv* when using in
+    research/publications.
+
+------------------------------------------------------------------------
+
+✨ With the switch from **LSTM → Bi-LSTM**, this project now achieves
+**83% accuracy** and provides reliable sentiment predictions.
