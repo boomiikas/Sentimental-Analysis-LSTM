@@ -59,7 +59,11 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 -   **Predictions:** Stable and true compared to standard LSTM
 
 ------------------------------------------------------------------------
+## Model Evaluation
 
+<img width="1010" height="470" alt="image" src="https://github.com/user-attachments/assets/1dd2121e-d0bd-4022-9032-6dfc4a004dbc" />
+
+---
 ## 🔍 Usage Suggestions
 
 **Feature Engineering Options:**
