@@ -38,6 +38,7 @@ class AttentionLayer(Layer):
 # -------------------------
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
+nltk.download('punkt_tab',quiet=True)
 stop_words = set(stopwords.words('english'))
 stemmer = PorterStemmer()
 
@@ -67,6 +68,7 @@ try:
     model = load_model("rnnmodel.h5", custom_objects={"AttentionLayer": AttentionLayer})
 except Exception:
     # If loading fails on cloud, rebuild first
+    model = load_model("rnnmodel.h5", custom_objects={"AttentionLayer": AttentionLayer})
     dummy_input = tf.zeros((1, max_len, embedding_dim))
     model.build(dummy_input.shape)
     model = load_model("rnnmodel.h5", custom_objects={"AttentionLayer": AttentionLayer})
