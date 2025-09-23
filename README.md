@@ -85,9 +85,9 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 
 ## 🖼️ App Screenshots
 
-`<img width="1019" height="513" alt="image" src="https://github.com/user-attachments/assets/b6a6023c-7997-47b0-9065-7d441c4152f5" />`{=html}\
-`<img width="1191" height="597" alt="image" src="https://github.com/user-attachments/assets/03bfc4db-73bf-4e91-86a1-ae8a72d76308" />`{=html}\
-`<img width="1049" height="542" alt="image" src="https://github.com/user-attachments/assets/05dcea70-93f2-4ed9-a874-71b3fcb76a73" />`{=html}
+<img width="1019" height="513" alt="image" src="https://github.com/user-attachments/assets/b6a6023c-7997-47b0-9065-7d441c4152f5" />
+<img width="1191" height="597" alt="image" src="https://github.com/user-attachments/assets/03bfc4db-73bf-4e91-86a1-ae8a72d76308" />
+<img width="1049" height="542" alt="image" src="https://github.com/user-attachments/assets/05dcea70-93f2-4ed9-a874-71b3fcb76a73" />
 
 ------------------------------------------------------------------------
 
