@@ -2,7 +2,7 @@
 
 A deep learning project for sentiment classification using the
 [Sentiment Analysis
-Dataset](https://www.kaggle.com/datasets/abhi8923shriv/sentiment-analysis-dataset?utm_source=chatgpt.com&select=train.csv).\
+Dataset](https://www.kaggle.com/datasets/abhi8923shriv/sentiment-analysis-dataset?utm_source=chatgpt.com&select=train.csv).
 The goal is to train and evaluate models that predict sentiment
 (positive, negative, neutral) from text data.
 
@@ -13,21 +13,21 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 
 ## 📦 Dataset Description
 
--   **Name:** Sentiment Analysis Dataset\
--   **Source:** Kaggle --- by user *abhi8923shriv*\
+-   **Name:** Sentiment Analysis Dataset
+-   **Source:** Kaggle --- by user *abhi8923shriv*
 -   **Format:** CSV files (train.csv, test.csv if available)
 
 ### Columns in `train.csv`:
 
--   **text** → The text content (tweets/reviews/sentences).\
+-   **text** → The text content (tweets/reviews/sentences).
 -   **sentiment** → Target label (positive / negative / neutral).
 
 ------------------------------------------------------------------------
 
 ## ✅ Task
 
--   **Objective:** Sentiment Classification\
--   **Goal:** Predict the sentiment of a given text input.\
+-   **Objective:** Sentiment Classification
+-   **Goal:** Predict the sentiment of a given text input.
 -   **Labels:** Positive, Negative, Neutral
 
 ------------------------------------------------------------------------
@@ -36,8 +36,8 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 
 ### 🔹 Preprocessing
 
--   Text cleaning (lowercasing, punctuation removal, stopwords)\
--   Tokenization & padding sequences\
+-   Text cleaning (lowercasing, punctuation removal, stopwords)
+-   Tokenization & padding sequences
 -   Handled noisy data (typos, emojis, special chars)
 
 ### 🔹 Models Tried
@@ -46,7 +46,7 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
     -   Initial experiments with a standard LSTM gave poor accuracy and
         unreliable predictions.
 2.  **Bi-LSTM (Bidirectional LSTM):**
-    -   Switching to Bi-LSTM significantly improved results.\
+    -   Switching to Bi-LSTM significantly improved results.
     -   Achieved **83% accuracy** with consistent and correct
         predictions.
 
@@ -54,31 +54,31 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 
 ## 📊 Results
 
--   **Final Model:** Bi-LSTM\
--   **Accuracy:** 83%\
+-   **Final Model:** Bi-LSTM
+-   **Accuracy:** 83%
 -   **Predictions:** Stable and true compared to standard LSTM
 
 ------------------------------------------------------------------------
 
 ## 🔍 Usage Suggestions
 
-**Feature Engineering Options:**\
-- Bag-of-Words / TF-IDF\
-- Word Embeddings (Word2Vec, GloVe, FastText)\
+**Feature Engineering Options:**
+- Bag-of-Words / TF-IDF
+- Word Embeddings (Word2Vec, GloVe, FastText)
 - Transformer models (BERT, RoBERTa, DistilBERT)
 
-**Evaluation Metrics:**\
-- Accuracy, Precision, Recall, F1-score\
-- Confusion Matrix\
+**Evaluation Metrics:**
+- Accuracy, Precision, Recall, F1-score
+- Confusion Matrix
 - Macro/Weighted F1 for imbalanced data
 
 ------------------------------------------------------------------------
 
 ## ⚠ Considerations
 
--   Class imbalance may affect results\
--   Text contains noise (typos, emojis, special chars)\
--   Risk of overfitting on small dataset → apply dropout/regularization\
+-   Class imbalance may affect results
+-   Text contains noise (typos, emojis, special chars)
+-   Risk of overfitting on small dataset → apply dropout/regularization
 -   Ensure proper train/test split (avoid leakage)
 
 ------------------------------------------------------------------------
@@ -93,7 +93,7 @@ App](https://sentimental-analysis-lstm-b5.streamlit.app/)
 
 ## 📝 Licensing & Citation
 
--   Refer to the Kaggle dataset page for licensing terms.\
+-   Refer to the Kaggle dataset page for licensing terms.
 -   Cite the dataset author: *abhi8923shriv* when using in
     research/publications.
 
